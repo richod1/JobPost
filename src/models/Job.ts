@@ -1,5 +1,6 @@
     import {AutoPaginatable, OrganizationMembership, User, WorkOS} from "@workos-inc/node";
     import mongoose, {model, models, Schema} from 'mongoose';
+    import { ConnectDatabase } from "@/database/db";
 
     export type Job = {
     _id: string;
@@ -50,8 +51,12 @@
 
     export async function addOrgAndUserData(jobsDocs:Job[], user:User|null) {
     jobsDocs = JSON.parse(JSON.stringify(jobsDocs));
-    await mongoose.connect(process.env.MONGO_URI as string);
-    const workos = new WorkOS(process.env.WORKOS_API_KEY);
+    await ConnectDatabase();
+    // await mongoose.connect(process.env.MONGO_URI as string).then(()=>{
+    //     console.log("database connected Successfully!")
+    // }).catch(err=>console.log(err,"Database failed to connect"))
+
+    const workos = new WorkOS(process.env.WORKOS_API);
     let oms:AutoPaginatable<OrganizationMembership>|null = null;
     if (user) {
         oms = await workos.userManagement.listOrganizationMemberships({
