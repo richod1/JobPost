@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@workos-inc/authkit-nextjs": "^0.6.1",
     "@workos-inc/node": "^7.11.2",
     "mongoose": "^8.4.3",
     "next": "14.2.4",
