@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Header from "@/app/components/Header"
 
 const inter = Inter({ subsets: ["latin"] });
   const today=new Date();
@@ -18,6 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <Header/>
         {children}
         <footer className="container py-8 text-gray-500">
           Job Board &copy; {today.getFullYear()} - All right reserved
