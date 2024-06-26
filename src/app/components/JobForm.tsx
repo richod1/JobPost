@@ -1,4 +1,5 @@
 'use client'
+import {JobAction} from "@/app/actions/jobActions"
 import type {Job} from '@/models/Job'
 import ImageUpload from '@/app/components/ImageUpload'
 import {redirect} from 'next/navigation'
