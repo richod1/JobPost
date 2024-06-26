@@ -13,6 +13,7 @@ import {
     CountrySelect,
     StateSelect,
 } from "react-country-state-city";
+import axios from "axios";
 
 export default function JonForm({orgId,jobDoc}:{orgId:string;jobDoc?:Job}){
     const [countryId,setCountryId]=useState(jobDoc?.countryId||0);
@@ -35,6 +36,23 @@ export default function JonForm({orgId,jobDoc}:{orgId:string;jobDoc?:Job}){
         redirect(`/jobs/${jobDoc.orgId}`);
         }
 
+        /**
+         * to het user currency we need to know the locayion of the user
+         * and also the exchanfe rate of the user currency
+         * and finally display that currency to the user
+         */
+
+        async function getUserLocation(): Promise<string>{
+            const response=await axios.get('ip api');
+            console.log(response.data.country);
+            return response.data.country;
+
+        }
+
+        function getUserCurrency(){
+            // add code for user currency
+        }
+
     return(
         <Theme>
             <form action={handleSaveJob} className="container mt-6 flex flex-col gap-4">
@@ -52,9 +70,29 @@ export default function JonForm({orgId,jobDoc}:{orgId:string;jobDoc?:Job}){
                         </RadioGroup.Root>
                     </div>
                     <div>
+                    Full Time?
+                    <RadioGroup.Root defaultValue={jobDoc?.type||"full"}>
+                            <RadioGroup.Item value="project">Project-Based</RadioGroup.Item>
+                            <RadioGroup.Item value="part">Part-Time</RadioGroup.Item>
+                            <RadioGroup.Item value="full">Full-Time</RadioGroup.Item>
+                    </RadioGroup.Root>
                         
                     </div>
+                    <div>
+                        Salary
+                        <TextField.Root name="salary" defaultValue={jobDoc?.salary||""}>
+                            <TextField.Slot>
+                                $
+                            </TextField.Slot>
+                            <TextField.Slot>
+                                k/year
+                            </TextField.Slot>
+                        </TextField.Root>
+
+                    </div>
                 </div>
+{/* set location */}
+
             </form>
         </Theme>
     )
